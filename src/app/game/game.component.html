@@ -1,0 +1,34 @@
+<div *ngIf = "!gameWon">
+  <div class="Header">Hansel Color Game</div>
+  <div class="level"> Level : {{level}}</div>
+
+  <div *ngIf = "waitforinput" class="colorpicker-holder">
+    <button *ngFor="let color of colorpicker" id="{{color.id}}" class="colorpicker"
+      [ngStyle]="{'background-color': color.color}" (click)="constructUserInput(color.id)"></button>
+  </div>
+  <div *ngIf = "waitforinput && !lost && !levelComplete" class="user-alert">Please click the colors in the order that was shown</div>
+
+  <div *ngIf = "!waitforinput" class="displaycolor-holder">
+    <div class="displaycolor" [ngStyle]= "{'background-color': generatedRandomColor}"></div>
+  </div>
+ 
+  <div *ngIf = "!waitforinput" class="user-alert">Observe on the order of the colors</div>
+
+  <div *ngIf = "waitforinput && level > 1 && nextLevel && levelComplete" class="user-alert">Congrats Click Next to Play Next Level</div>
+  <div *ngIf = "lost" class="user-alert" >You Lost </div>
+
+
+  <div class="play-btn-container">
+    <button *ngIf="level === 1 && !lost && !waitforinput" class="play-btn" (click)="randomGenerateColors()">PLAY</button>
+    <button *ngIf="level > 1 && !lost && levelComplete" class="play-btn" (click)="randomGenerateColorsNext()">Next Level</button>
+    <button *ngIf="lost" class="play-btn"   (click)="restart()">Restart</button>
+
+
+  </div>
+
+
+  <!-- <input type="text" name ="generatedRandomNumber" [(ngModel)]="generatedRandomNumber"/> -->
+
+</div>
+
+<div *ngIf = "gameWon" class="user-alert">Congragulations you won the game, Restart to start again</div>
